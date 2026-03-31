@@ -1,6 +1,8 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
-import { Sparkles, Shield, Zap, Link2 } from 'lucide-react';
+import { Sparkles, Shield, Zap, Link2, Check, ArrowRight, Crown } from 'lucide-react';
 
 export default function HomePage() {
   return (
@@ -236,7 +238,130 @@ export default function HomePage() {
         </div>
       </main>
 
+      {/* ── Pricing Sneak Peek ────────────────────────────────── */}
+      <section className="max-w-6xl mx-auto px-4 pb-4 mt-10">
+        {/* Section header */}
+        <div className="text-center mb-10">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-4 text-sm font-semibold" style={{ background: 'rgba(88,169,190,0.1)', color: '#58A9BE' }}>
+            <Sparkles size={15} />
+            Simple pricing
+          </div>
+          <h3 className="text-4xl font-bold text-text-primary mb-3">
+            Free to start.<br />
+            <span className="text-accent">Pay when you're ready.</span>
+          </h3>
+          <p className="text-text-primary/60 text-lg max-w-xl mx-auto">
+            No credit card needed. No hidden fees. 0% transaction fees on every plan.
+          </p>
+        </div>
+
+        {/* Cards + fade overflow wrapper */}
+        <div className="relative">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+
+            {/* ── Free ── */}
+            <div className="bg-white rounded-3xl p-7 border flex flex-col gap-5 transition-transform duration-300 hover:-translate-y-1" style={{ borderColor: 'rgba(44,58,66,0.1)', boxShadow: '0 4px 20px rgba(44,58,66,0.06)' }}>
+              <div>
+                <p className="text-xs font-bold uppercase tracking-widest text-text-primary/40 mb-3">Free</p>
+                <div className="flex items-end gap-1 mb-1">
+                  <span className="text-4xl font-extrabold text-text-primary leading-none">Free</span>
+                </div>
+                <p className="text-sm text-text-primary/50 font-medium">forever</p>
+              </div>
+              <ul className="space-y-2.5 flex-1">
+                {['Unlimited Links', 'Basic Analytics', 'QR Code', 'Leynk subdomain'].map(f => (
+                  <li key={f} className="flex items-center gap-2.5 text-sm text-text-primary/75">
+                    <div className="rounded-full p-0.5 shrink-0" style={{ background: 'rgba(88,169,190,0.12)' }}>
+                      <Check size={12} strokeWidth={3} color="#58A9BE" />
+                    </div>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <Link href="/signup" className="w-full py-3 rounded-xl text-sm font-bold text-center transition-all border-2 hover:bg-accent/5" style={{ borderColor: 'rgba(44,58,66,0.15)', color: '#2C3A42' }}>
+                Start For Free
+              </Link>
+            </div>
+
+            {/* ── Creator (highlighted) ── */}
+            <div className="rounded-3xl p-7 flex flex-col gap-5 relative transition-transform duration-300 hover:-translate-y-1" style={{ background: '#D75852', boxShadow: '0 20px 50px rgba(215,88,82,0.28)' }}>
+              {/* Most popular badge */}
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-bold tracking-widest uppercase shadow" style={{ background: '#F3C845', color: '#2C3A42' }}>
+                Most Popular
+              </div>
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <Crown size={16} color="rgba(255,255,255,0.7)" />
+                  <p className="text-xs font-bold uppercase tracking-widest text-white/50">Creator</p>
+                </div>
+                <div className="flex items-end gap-1 mb-1">
+                  <span className="text-sm font-medium text-white/60 self-start mt-2">$</span>
+                  <span className="text-4xl font-extrabold text-white leading-none">24.99</span>
+                </div>
+                <p className="text-sm text-white/55 font-medium">one-time — no subscription</p>
+              </div>
+              <ul className="space-y-2.5 flex-1">
+                {['Remove Leynk Branding', 'Custom Colors & Fonts', 'Built-in Shop', 'Newsletter & Leads', 'Free .bio domain (1yr)'].map(f => (
+                  <li key={f} className="flex items-center gap-2.5 text-sm text-white/85">
+                    <div className="rounded-full p-0.5 shrink-0" style={{ background: 'rgba(255,255,255,0.2)' }}>
+                      <Check size={12} strokeWidth={3} color="#fff" />
+                    </div>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <Link href="/pricing" className="w-full py-3 rounded-xl text-sm font-bold text-center transition-all" style={{ background: 'rgba(255,255,255,0.18)', color: '#fff', border: '1.5px solid rgba(255,255,255,0.3)' }}>
+                Get Creator
+              </Link>
+            </div>
+
+            {/* ── Pro ── */}
+            <div className="rounded-3xl p-7 flex flex-col gap-5 transition-transform duration-300 hover:-translate-y-1" style={{ background: '#2C3A42', boxShadow: '0 20px 50px rgba(44,58,66,0.2)' }}>
+              <div>
+                <p className="text-xs font-bold uppercase tracking-widest text-white/35 mb-3">Pro</p>
+                <div className="flex items-end gap-1 mb-1">
+                  <span className="text-sm font-medium text-white/50 self-start mt-2">$</span>
+                  <span className="text-4xl font-extrabold text-white leading-none">9.99</span>
+                </div>
+                <p className="text-sm text-white/40 font-medium">/month</p>
+              </div>
+              <ul className="space-y-2.5 flex-1">
+                {['Everything in Creator', 'Custom Domain', 'Booking Calendar', 'Verification Badge', 'Team Members'].map(f => (
+                  <li key={f} className="flex items-center gap-2.5 text-sm text-white/75">
+                    <div className="rounded-full p-0.5 shrink-0" style={{ background: 'rgba(255,255,255,0.12)' }}>
+                      <Check size={12} strokeWidth={3} color="rgba(255,255,255,0.8)" />
+                    </div>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <Link href="/pricing" className="w-full py-3 rounded-xl text-sm font-bold text-center transition-all" style={{ background: 'rgba(255,255,255,0.1)', color: '#fff', border: '1.5px solid rgba(255,255,255,0.2)' }}>
+                Get Pro
+              </Link>
+            </div>
+
+          </div>
+
+          {/* Gradient fade + "See all plans" CTA */}
+          <div className="absolute bottom-0 left-0 right-0 h-28 pointer-events-none rounded-b-3xl" style={{ background: 'linear-gradient(to top, rgba(245,241,233,0.95) 0%, transparent 100%)' }} />
+        </div>
+
+        {/* Full pricing CTA */}
+        <div className="text-center mt-6 relative z-10">
+          <Link
+            href="/pricing"
+            className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full font-bold text-sm transition-all hover:shadow-lg hover:scale-105 group"
+            style={{ background: '#58A9BE', color: '#fff', boxShadow: '0 4px 16px rgba(88,169,190,0.35)' }}
+          >
+            See full pricing & compare plans
+            <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
+          </Link>
+          <p className="text-text-primary/40 text-xs mt-3 font-medium">Free forever · 0% fees · Cancel anytime</p>
+        </div>
+      </section>
+
       {/* Footer */}
+
       <footer className="mt-24 border-t border-accent/15 bg-white/40 backdrop-blur-md">
         <div className="max-w-6xl mx-auto px-4 py-16">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8">
@@ -261,7 +386,7 @@ export default function HomePage() {
               <h4 className="font-bold text-text-primary mb-4">Product</h4>
               <ul className="space-y-3 text-sm text-text-primary/70">
                 <li><Link href="/" className="hover:text-accent font-medium transition-colors">Features</Link></li>
-                <li><Link href="/" className="hover:text-accent font-medium transition-colors">Pricing</Link></li>
+                <li><Link href="/pricing" className="hover:text-accent font-medium transition-colors">Pricing</Link></li>
                 <li><Link href="/" className="hover:text-accent font-medium transition-colors">Integrations</Link></li>
                 <li><Link href="/" className="hover:text-accent font-medium transition-colors">Analytics</Link></li>
               </ul>
