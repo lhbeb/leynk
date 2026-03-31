@@ -3,8 +3,24 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Sparkles, Shield, Zap, Link2, Check, ArrowRight, Crown } from 'lucide-react';
+import { useEffect, useRef } from 'react';
 
 export default function HomePage() {
+  const hasTracked = useRef(false);
+
+  useEffect(() => {
+    if (hasTracked.current) return;
+    hasTracked.current = true;
+
+    fetch('/api/analytics/track', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ isHomePage: true }),
+    }).catch(console.error);
+  }, []);
+
   return (
     <div 
       className="min-h-screen"

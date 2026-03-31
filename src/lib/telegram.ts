@@ -166,6 +166,41 @@ export function formatSubscriptionNotification(data: {
   return message;
 }
 
+// Format homepage visit notification message
+export function formatHomePageVisitNotification(data: {
+  userIp?: string;
+  country?: string;
+  countryCode?: string;
+  city?: string;
+  referrer?: string | null;
+}): string {
+  const { userIp, country, countryCode, city, referrer } = data;
+  
+  let message = `🏠 <b>New Homepage Visit!</b>\n\n`;
+  message += `🔗 <b>Page:</b> <a href="https://leynk.co/">leynk.co</a>\n`;
+  
+  // Always show IP address
+  message += `🌍 <b>IP:</b> ${userIp || 'Unknown'}\n`;
+  
+  // Show location with flag emoji
+  if (country && country !== 'Unknown' && country !== 'Local') {
+    const flag = getCountryFlag(countryCode);
+    message += `📍 <b>Location:</b> ${flag} ${city && city !== 'Unknown' && city !== 'Local' ? `${city}, ` : ''}${country}\n`;
+  } else if (userIp && (userIp === '127.0.0.1' || userIp === '::1' || userIp.startsWith('192.168.') || userIp.startsWith('10.') || userIp.startsWith('172.') || userIp === 'Unknown')) {
+    message += `📍 <b>Location:</b> 🌍 Local/Private Network\n`;
+  } else {
+    message += `📍 <b>Location:</b> 🌍 Unknown\n`;
+  }
+  
+  if (referrer && referrer !== 'null' && !referrer.includes('leynk.co') && !referrer.includes('localhost')) {
+    message += `🔗 <b>Referrer:</b> ${referrer}\n`;
+  }
+  
+  message += `⏰ <b>Time:</b> ${new Date().toLocaleString()}\n`;
+  
+  return message;
+}
+
 // Get bot info (useful for getting chat ID)
 export async function getBotInfo(): Promise<any> {
   try {

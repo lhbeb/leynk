@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import { sendTelegramMessage, formatPageViewNotification } from '@/lib/telegram';
+import { sendTelegramMessage, formatPageViewNotification, formatHomePageVisitNotification } from '@/lib/telegram';
 
 const supabaseUrl = 'https://rwevvpdpguhincowygzx.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ3ZXZ2cGRwZ3VoaW5jb3d5Z3p4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI1NDg1MTQsImV4cCI6MjA3ODEyNDUxNH0.W-2ECC9vNHaOC0lP8BntGUM4StaseOl-nAwtmCKsxl0';
@@ -157,11 +157,11 @@ function getClientIP(request: NextRequest): string {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { username } = body;
+    const { username, isHomePage } = body;
 
-    if (!username || typeof username !== 'string') {
+    if (!isHomePage && (!username || typeof username !== 'string')) {
       return NextResponse.json(
-        { error: 'Username is required' },
+        { error: 'Username is required for profile views' },
         { status: 400 }
       );
     }
@@ -170,6 +170,27 @@ export async function POST(request: NextRequest) {
     const ip = getClientIP(request);
     const userAgent = request.headers.get('user-agent') || 'Unknown';
     const referrer = request.headers.get('referer') || request.headers.get('referrer') || null;
+
+    // If this is a homepage visit, just send the notification and return
+    if (isHomePage) {
+      if (TELEGRAM_CHAT_ID) {
+        // Get location from IP
+        const location = await getLocationFromIP(ip);
+        
+        const notificationMessage = formatHomePageVisitNotification({
+          userIp: ip,
+          country: location.country || undefined,
+          countryCode: location.country_code || undefined,
+          city: location.city || undefined,
+          referrer: referrer,
+        });
+
+        sendTelegramMessage(TELEGRAM_CHAT_ID, notificationMessage, 'HTML').catch((error) => {
+          console.error('Failed to send Telegram notification for homepage visit:', error);
+        });
+      }
+      return NextResponse.json({ success: true, homepage: true });
+    }
 
     // Server-side deduplication: Check if we've tracked this view recently (within last 10 seconds)
     // This prevents duplicate tracking from rapid requests or network retries
