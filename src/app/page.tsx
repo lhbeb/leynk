@@ -185,17 +185,42 @@ export default function HomePage() {
             <h4 className="text-2xl font-bold text-text-primary mb-2">Taylor Swift</h4>
             <p className="text-text-primary/70 mb-6">Singer, songwriter and director.</p>
             
-            <div className="space-y-3">
-              <div className="bg-bg-primary rounded-xl p-4 text-text-primary font-medium hover:shadow-md transition-shadow cursor-pointer">
-                My Portfolio
+              <div className="space-y-3">
+                <a href="https://open.spotify.com/artist/06HL4z0CvFAxyc27GXpf02" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 bg-[#1DB954] text-white rounded-xl p-4 font-semibold hover:bg-[#1ed760] hover:shadow-lg transition-all cursor-pointer">
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                    <path d="M12 2C6.477 2 2 6.477 2 12c0 5.523 4.477 10 10 10 5.523 0 10-4.477 10-10 0-5.523-4.477-10-10-10zm4.586 14.424c-.18.295-.563.387-.857.207-2.35-1.434-5.305-1.76-8.784-.963-.335.077-.67-.133-.746-.47-.077-.334.132-.67.47-.745 3.806-.874 7.076-.496 9.71 1.115.293.18.386.563.207.856zm1.226-2.738c-.227.368-.7.485-1.066.26-2.695-1.656-6.804-2.146-9.965-1.176-.41.125-.837-.105-.96-.514-.125-.41.104-.837.513-.96 3.63-1.114 8.163-.564 11.217 1.314.367.226.485.7.26 1.067zm.098-2.85c-3.23-1.92-8.542-2.096-11.603-1.16-.5.15-1.02-.132-1.17-.63-.15-.5.13-1.02.63-1.17 3.52-1.075 9.4-1.25 13.14 1.114.453.284.593.89.31 1.343-.284.453-.89.593-1.343.31z"/>
+                  </svg>
+                  Listen on Spotify
+                </a>
+
+                <a href="https://www.youtube.com/channel/UCqECaJ8Gagnn7YCbPEzWH6g" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 bg-[#FF0000] text-white rounded-xl p-4 font-semibold hover:bg-[#FF0000]/90 hover:shadow-lg transition-all cursor-pointer">
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                    <path d="M21.582 6.186a2.709 2.709 0 00-1.904-1.914C17.994 3.75 12 3.75 12 3.75s-5.994 0-7.678.522a2.706 2.706 0 00-1.904 1.914C1.896 7.893 1.896 12 1.896 12s0 4.107.522 5.814a2.706 2.706 0 001.904 1.914C5.994 20.25 12 20.25 12 20.25s5.994 0 7.678-.522a2.707 2.707 0 001.904-1.914C22.104 16.107 22.104 12 22.104 12s0-4.107-.522-5.814zM9.993 15.381V8.62L15.385 12l-5.392 3.381z"/>
+                  </svg>
+                  Subscribe on YouTube
+                </a>
+
+                <a href="https://www.tiktok.com/@taylorswift" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 bg-[#000000] text-white rounded-xl p-4 font-semibold hover:bg-[#222222] hover:shadow-lg transition-all cursor-pointer">
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                    <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005.8 19.34a6.34 6.34 0 006.12-6V6a8.28 8.28 0 005.89 2.6V5.2a4.44 4.44 0 011.78-.35v1.84z"/>
+                  </svg>
+                  Follow on TikTok
+                </a>
+
+                <a href="https://taylorswift.tumblr.com/" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 bg-[#36465D] text-white rounded-xl p-4 font-semibold hover:bg-[#2e3b4f] hover:shadow-lg transition-all cursor-pointer">
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                    <path d="M14.563 24c-5.093 0-7.031-3.756-7.031-6.411V9.747H5.116V6.648c3.63-1.313 4.512-4.596 4.71-6.469C9.84.051 9.941 0 9.999 0h3.517v6.114h4.801v3.633h-4.82v7.47c.016 1.001.375 2.371 2.207 2.371h.09c.631-.02 1.486-.205 1.936-.419l1.156 3.425c-.436.636-2.4 1.364-4.323 1.406" />
+                  </svg>
+                  Follow on Tumblr
+                </a>
+
+                <a href="https://x.com/taylorswift13" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 bg-[#0F1419] text-white rounded-xl p-4 font-semibold hover:bg-[#272c30] hover:shadow-lg transition-all cursor-pointer">
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                  </svg>
+                  Follow on X
+                </a>
               </div>
-              <div className="bg-bg-primary rounded-xl p-4 text-text-primary font-medium hover:shadow-md transition-shadow cursor-pointer">
-                Latest Blog Post
-              </div>
-              <div className="bg-bg-primary rounded-xl p-4 text-text-primary font-medium hover:shadow-md transition-shadow cursor-pointer">
-                Shop My Picks
-              </div>
-            </div>
           </div>
         </div>
       </main>
