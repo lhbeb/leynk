@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Link2, Plus, Edit, Trash2, Eye, Users, LogOut, Copy, Check, BarChart3, RefreshCw, Trash, MoreVertical, Search, X, Terminal } from 'lucide-react';
+import { Link2, Plus, Edit, Trash2, Eye, Users, LogOut, Copy, Check, BarChart3, RefreshCw, Trash, MoreVertical, Search, X, Terminal, Download, Upload, FileJson, FileText } from 'lucide-react';
 import { UserPage } from '@/types';
 import AuthGuard from '@/components/AuthGuard';
 import { clearSession, isSuperAdmin } from '@/lib/auth';
@@ -24,11 +24,23 @@ function AdminDashboardContent() {
   const [analyticsUsername, setAnalyticsUsername] = useState<string | null>(null);
   const [openMenuUsername, setOpenMenuUsername] = useState<string | null>(null);
 
+  // Selection + export state
+  const [selectedUsernames, setSelectedUsernames] = useState<Set<string>>(new Set());
+
+  // Import modal state
+  const [showImportModal, setShowImportModal] = useState(false);
+  const [importJson, setImportJson] = useState('');
+  const [importing, setImporting] = useState(false);
+  const [importError, setImportError] = useState('');
+
   // Search & filter state
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'highest-views'>('newest');
   const [filterListedBy, setFilterListedBy] = useState('');
   const [superAdmin] = useState(() => isSuperAdmin());
+
+  const PAGE_SIZE = 25;
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     fetchUsers();
@@ -39,12 +51,18 @@ function AdminDashboardContent() {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setOpenMenuUsername(null);
+        setShowImportModal(false);
       }
     };
 
     document.addEventListener('keydown', handleEscape);
     return () => document.removeEventListener('keydown', handleEscape);
   }, []);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, sortBy, filterListedBy, activeTab]);
 
   const fetchUsers = async () => {
     try {
@@ -228,6 +246,110 @@ function AdminDashboardContent() {
     }
   };
 
+  // ── Selection helpers ──────────────────────────────────────────────────────
+  const toggleSelect = (username: string) => {
+    setSelectedUsernames(prev => {
+      const next = new Set(prev);
+      next.has(username) ? next.delete(username) : next.add(username);
+      return next;
+    });
+  };
+
+  const toggleSelectAll = () => {
+    const visible = (activeTab === 'active' ? filteredUsers : currentUsers).map(u => u.username);
+    const allSelected = visible.every(u => selectedUsernames.has(u));
+    setSelectedUsernames(prev => {
+      const next = new Set(prev);
+      if (allSelected) visible.forEach(u => next.delete(u));
+      else visible.forEach(u => next.add(u));
+      return next;
+    });
+  };
+
+  const clearSelection = () => setSelectedUsernames(new Set());
+
+  // ── Export helpers ─────────────────────────────────────────────────────────
+  const getSelectedUsers = () =>
+    users.filter(u => selectedUsernames.has(u.username));
+
+  const exportJSON = () => {
+    const data = getSelectedUsers().map(u => ({
+      username: u.username,
+      bio: u.bio || '',
+      profilePicture: u.profilePicture || '',
+      theme: u.theme || 'standard',
+      listedBy: u.listedBy || '',
+      links: u.links || [],
+      createdAt: u.createdAt,
+    }));
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `leynk-profiles-${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const exportCSV = () => {
+    const rows = [['username', 'bio', 'theme', 'listedBy', 'links_count', 'clicks', 'createdAt']];
+    getSelectedUsers().forEach(u => {
+      rows.push([
+        u.username,
+        (u.bio || '').replace(/,/g, ';'),
+        u.theme || 'standard',
+        u.listedBy || '',
+        String((u.links || []).length),
+        String(viewStats[u.username] || 0),
+        u.createdAt,
+      ]);
+    });
+    const csv = rows.map(r => r.join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `leynk-profiles-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  // ── Import handler ─────────────────────────────────────────────────────────
+  const handleImport = async () => {
+    setImportError('');
+    let parsed;
+    try {
+      parsed = JSON.parse(importJson);
+      // Accept single object or array
+      if (!Array.isArray(parsed)) parsed = [parsed];
+    } catch {
+      setImportError('Invalid JSON. Please paste valid profile JSON.');
+      return;
+    }
+
+    setImporting(true);
+    const results: string[] = [];
+    for (const profile of parsed) {
+      if (!profile.username) { results.push(`Skipped: missing username`); continue; }
+      try {
+        const res = await fetch('/api/users', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(profile),
+        });
+        const data = await res.json();
+        results.push(res.ok ? `✓ ${profile.username}` : `✗ ${profile.username}: ${data.error}`);
+      } catch {
+        results.push(`✗ ${profile.username}: network error`);
+      }
+    }
+    setImporting(false);
+    alert(results.join('\n'));
+    setShowImportModal(false);
+    setImportJson('');
+    await fetchUsers();
+  };
+
   const currentUsers = activeTab === 'active' ? users : deletedUsers;
 
   // Deduplicated list of "listed by" values for the filter dropdown
@@ -263,6 +385,13 @@ function AdminDashboardContent() {
 
   const isFiltered =
     !!searchQuery || sortBy !== 'newest' || !!filterListedBy;
+
+  // Pagination — reset to page 1 whenever filters change
+  const totalPages = Math.ceil(filteredUsers.length / PAGE_SIZE);
+  const paginatedUsers = filteredUsers.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+
+  const deletedTotalPages = Math.ceil(deletedUsers.length / PAGE_SIZE);
+  const paginatedDeleted = deletedUsers.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
 
   return (
     <div className="min-h-screen bg-bg-primary">
@@ -367,7 +496,48 @@ function AdminDashboardContent() {
               </span>
             </Link>
           </div>
+
+          {/* Import Profile card */}
+          <div className="bg-white rounded-2xl p-6 shadow-sm">
+            <button
+              onClick={() => { setImportJson(''); setImportError(''); setShowImportModal(true); }}
+              className="flex items-center gap-3 justify-center w-full h-full group"
+            >
+              <Upload className="text-[#58A9BE] group-hover:scale-110 transition-transform" size={24} />
+              <span className="text-lg font-semibold text-[#58A9BE] group-hover:text-[#58A9BE]/80 transition-colors">
+                Import Profile
+              </span>
+            </button>
+          </div>
         </div>
+
+        {/* Floating selection action bar */}
+        {selectedUsernames.size > 0 && (
+          <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 bg-[#2C3A42] text-white px-6 py-3.5 rounded-2xl shadow-2xl animate-fade-in">
+            <span className="text-sm font-semibold">{selectedUsernames.size} selected</span>
+            <div className="w-px h-5 bg-white/20" />
+            <button
+              onClick={exportJSON}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-sm font-semibold transition-colors"
+            >
+              <FileJson size={15} />
+              Export JSON
+            </button>
+            <button
+              onClick={exportCSV}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-sm font-semibold transition-colors"
+            >
+              <FileText size={15} />
+              Export CSV
+            </button>
+            <button
+              onClick={clearSelection}
+              className="ml-1 p-1.5 rounded-lg hover:bg-white/10 transition-colors"
+            >
+              <X size={15} />
+            </button>
+          </div>
+        )}
 
         {/* Tabs */}
         <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
@@ -491,6 +661,16 @@ function AdminDashboardContent() {
               <table className="w-full">
                 <thead className="bg-bg-primary">
                   <tr>
+                    {activeTab === 'active' && (
+                      <th className="pl-5 pr-2 py-4">
+                        <input
+                          type="checkbox"
+                          className="w-4 h-4 rounded accent-[#58A9BE] cursor-pointer"
+                          checked={filteredUsers.length > 0 && filteredUsers.every(u => selectedUsernames.has(u.username))}
+                          onChange={toggleSelectAll}
+                        />
+                      </th>
+                    )}
                     <th className="px-6 py-4 text-left text-sm font-semibold text-text-primary">
                       Username
                     </th>
@@ -514,8 +694,18 @@ function AdminDashboardContent() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-accent/10">
-                  {(activeTab === 'active' ? filteredUsers : currentUsers).map((user) => (
-                    <tr key={user.username} className="hover:bg-bg-primary/30 transition-colors">
+                  {(activeTab === 'active' ? paginatedUsers : paginatedDeleted).map((user) => (
+                    <tr key={user.username} className={`hover:bg-bg-primary/30 transition-colors ${selectedUsernames.has(user.username) ? 'bg-accent/5' : ''}`}>
+                      {activeTab === 'active' && (
+                        <td className="pl-5 pr-2 py-4">
+                          <input
+                            type="checkbox"
+                            className="w-4 h-4 rounded accent-[#58A9BE] cursor-pointer"
+                            checked={selectedUsernames.has(user.username)}
+                            onChange={() => toggleSelect(user.username)}
+                          />
+                        </td>
+                      )}
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-3">
                           {user.profilePicture ? (
@@ -668,12 +858,99 @@ function AdminDashboardContent() {
                   ))}
                 </tbody>
               </table>
+
+              {/* Pagination Controls */}
+              {((activeTab === 'active' ? totalPages : deletedTotalPages) > 1) && (
+                <div className="flex items-center justify-between px-6 py-4 border-t border-accent/10">
+                  <button
+                    onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                    disabled={currentPage === 1}
+                    className="px-4 py-2 rounded-lg font-semibold text-sm transition-colors text-text-primary hover:bg-bg-primary disabled:opacity-30 disabled:cursor-not-allowed"
+                  >
+                    Previous
+                  </button>
+                  <span className="text-sm text-text-primary/60 font-medium">
+                    Page {currentPage} of {activeTab === 'active' ? totalPages : deletedTotalPages}
+                  </span>
+                  <button
+                    onClick={() => setCurrentPage(p => Math.min(activeTab === 'active' ? totalPages : deletedTotalPages, p + 1))}
+                    disabled={currentPage === (activeTab === 'active' ? totalPages : deletedTotalPages)}
+                    className="px-4 py-2 rounded-lg font-semibold text-sm transition-colors text-text-primary hover:bg-bg-primary disabled:opacity-30 disabled:cursor-not-allowed"
+                  >
+                    Next
+                  </button>
+                </div>
+              )}
             </div>
           )}
         </div>
       </main>
 
       {/* Analytics Modal */}
+      {/* Import Modal */}
+      {showImportModal && (
+        <>
+          <div
+            className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40"
+            onClick={() => setShowImportModal(false)}
+          />
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-3xl shadow-2xl w-full max-w-lg p-8">
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-[#58A9BE]/10 rounded-xl flex items-center justify-center">
+                    <Upload className="text-[#58A9BE]" size={20} />
+                  </div>
+                  <h2 className="text-xl font-bold text-text-primary">Import Profile</h2>
+                </div>
+                <button
+                  onClick={() => setShowImportModal(false)}
+                  className="p-2 hover:bg-bg-primary rounded-lg transition-colors"
+                >
+                  <X size={18} className="text-text-primary/50" />
+                </button>
+              </div>
+
+              <p className="text-sm text-text-primary/60 mb-4">
+                Paste a profile JSON object or an array of profiles. Each must include a <code className="bg-bg-primary px-1 rounded">username</code> field.
+              </p>
+
+              <textarea
+                value={importJson}
+                onChange={e => { setImportJson(e.target.value); setImportError(''); }}
+                placeholder={'[\n  {\n    "username": "johndoe",\n    "bio": "Hello!",\n    "theme": "standard",\n    "listedBy": "Mehdi",\n    "links": []\n  }\n]'}
+                rows={10}
+                className="w-full px-4 py-3 border border-accent/20 rounded-xl text-sm font-mono text-text-primary focus:outline-none focus:ring-2 focus:ring-[#58A9BE]/40 resize-none"
+              />
+
+              {importError && (
+                <p className="mt-2 text-sm text-red-600">{importError}</p>
+              )}
+
+              <div className="flex gap-3 mt-6">
+                <button
+                  onClick={() => setShowImportModal(false)}
+                  className="flex-1 px-4 py-2.5 border border-accent/20 rounded-xl text-text-primary font-semibold hover:bg-bg-primary transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleImport}
+                  disabled={importing || !importJson.trim()}
+                  className="flex-1 px-4 py-2.5 bg-[#58A9BE] text-white rounded-xl font-semibold hover:bg-[#58A9BE]/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                >
+                  {importing ? (
+                    <><div className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />Importing...</>
+                  ) : (
+                    <><Upload size={16} />Import</>  
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+
       {analyticsUsername && (
         <AnalyticsModal
           isOpen={!!analyticsUsername}

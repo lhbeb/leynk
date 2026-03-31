@@ -9,6 +9,7 @@ export const ADMIN_NAMES = [
     'Othman',
     'Youssef',
     'Abdo',
+    'Yassine',
 ] as const;
 
 export type AdminName = typeof ADMIN_NAMES[number];

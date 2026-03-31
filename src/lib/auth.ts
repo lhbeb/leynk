@@ -29,7 +29,7 @@ const ADMIN_ACCOUNTS: AdminAccount[] = [
 // ─── Session ───────────────────────────────────────────────────────────────────
 
 const SESSION_KEY = 'leynk_admin_session';
-const SESSION_DURATION = 24 * 60 * 60 * 1000; // 24 hours
+const SESSION_DURATION = 30 * 24 * 60 * 60 * 1000; // 30 days
 
 interface SessionData {
   authenticated: boolean;
@@ -57,26 +57,52 @@ export function setSession(adminName: string, role: AdminRole = 'admin'): void {
     adminName,
     role,
   };
-  localStorage.setItem(SESSION_KEY, JSON.stringify(sessionData));
+  
+  const raw = JSON.stringify(sessionData);
+  // Set advanced 30-day secure cookie (more reliable than localStorage)
+  const expires = new Date(Date.now() + SESSION_DURATION).toUTCString();
+  document.cookie = `${SESSION_KEY}=${encodeURIComponent(raw)}; expires=${expires}; path=/; SameSite=Strict${window.location.protocol === 'https:' ? '; Secure' : ''}`;
+  
+  // Keep localStorage as fallback
+  localStorage.setItem(SESSION_KEY, raw);
 }
 
 export function clearSession(): void {
   if (typeof window === 'undefined') return;
+  document.cookie = `${SESSION_KEY}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
   localStorage.removeItem(SESSION_KEY);
 }
 
 function getSession(): SessionData | null {
   if (typeof window === 'undefined') return null;
   try {
-    const raw = localStorage.getItem(SESSION_KEY);
+    // 1. Try advanced cookie first
+    let raw = null;
+    const cookies = document.cookie.split(';');
+    for (const c of cookies) {
+      const parts = c.trim().split('=');
+      if (parts[0] === SESSION_KEY && parts[1]) {
+        raw = decodeURIComponent(parts[1]);
+        break;
+      }
+    }
+    
+    // 2. Fallback to localStorage
+    if (!raw) {
+      raw = localStorage.getItem(SESSION_KEY);
+    }
+    
     if (!raw) return null;
+    
     const session: SessionData = JSON.parse(raw);
-    if (!session.authenticated || !session.timestamp) return null;
-    // Expire after 24 hours
-    if (Date.now() - session.timestamp > SESSION_DURATION) {
+    if (!session.authenticated) return null;
+    
+    // Cookie naturally handles expiration, but we verify timestamp if present
+    if (session.timestamp && Date.now() - session.timestamp > SESSION_DURATION) {
       clearSession();
       return null;
     }
+    
     return session;
   } catch {
     clearSession();
@@ -104,14 +130,9 @@ export function getCurrentRole(): AdminRole | null {
 
 export function getSessionRemainingTime(): number {
   if (typeof window === 'undefined') return 0;
-  try {
-    const raw = localStorage.getItem(SESSION_KEY);
-    if (!raw) return 0;
-    const session: SessionData = JSON.parse(raw);
-    if (!session.authenticated || !session.timestamp) return 0;
-    const remaining = SESSION_DURATION - (Date.now() - session.timestamp);
-    return remaining > 0 ? remaining : 0;
-  } catch {
-    return 0;
-  }
+  const session = getSession();
+  if (!session || !session.timestamp) return 0;
+  
+  const remaining = SESSION_DURATION - (Date.now() - session.timestamp);
+  return remaining > 0 ? remaining : 0;
 }
