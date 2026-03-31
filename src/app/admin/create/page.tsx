@@ -145,7 +145,7 @@ function CreateUserContent() {
       });
 
       if (response.ok) {
-        router.push('/admin');
+        router.push('/admin/edit/' + finalUsername);
       } else {
         const data = await response.json();
         alert(data.error || 'Failed to create user');
