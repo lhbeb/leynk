@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Plus, X, ArrowLeft, Upload, CheckCircle, AlertCircle, Palette, GripVertical } from 'lucide-react';
+import { Plus, X, ArrowLeft, Upload, CheckCircle, AlertCircle, Palette, GripVertical, Eye } from 'lucide-react';
 import { Link as LinkType, UserPage } from '@/types';
 import AuthGuard from '@/components/AuthGuard';
 import EmojiPicker from '@/components/EmojiPicker';
@@ -434,8 +434,16 @@ function EditUserContent({ params }: { params: { username: string } }) {
             </Link>
           </div>
 
-          {/* Right: Page Title */}
-          <div className="flex-1 flex justify-end">
+          {/* Right: Actions & Page Title */}
+          <div className="flex-1 flex justify-end items-center gap-4">
+            <Link
+              href={`/${username}`}
+              target="_blank"
+              className="inline-flex items-center gap-2 px-3 py-1.5 bg-accent/10 text-accent rounded-lg hover:bg-accent/20 transition-colors text-sm font-semibold"
+            >
+              <Eye size={16} />
+              View Profile
+            </Link>
             <span className="text-lg font-semibold text-text-primary/60">Edit {username}</span>
           </div>
         </div>
