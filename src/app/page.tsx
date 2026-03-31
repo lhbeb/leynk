@@ -179,9 +179,11 @@ export default function HomePage() {
           </p>
           
           <div className="max-w-md mx-auto bg-white rounded-3xl shadow-xl p-8">
-            <div className="w-24 h-24 bg-gradient-to-br from-accent to-accent/70 rounded-full mx-auto mb-4"></div>
-            <h4 className="text-2xl font-bold text-text-primary mb-2">Alex Morgan</h4>
-            <p className="text-text-primary/70 mb-6">Designer, creator and coffee enthusiast.</p>
+            <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-white shadow-xl relative">
+              <Image src="/taylor.jpg" alt="Taylor Swift" fill className="object-cover" />
+            </div>
+            <h4 className="text-2xl font-bold text-text-primary mb-2">Taylor Swift</h4>
+            <p className="text-text-primary/70 mb-6">Singer, songwriter and director.</p>
             
             <div className="space-y-3">
               <div className="bg-bg-primary rounded-xl p-4 text-text-primary font-medium hover:shadow-md transition-shadow cursor-pointer">
