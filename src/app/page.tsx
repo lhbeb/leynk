@@ -82,6 +82,129 @@ export default function HomePage() {
           </Link>
         </div>
 
+        {/* Example Section */}
+        <div className="mt-16 text-center pb-8">
+          <h3 className="text-3xl font-bold text-text-primary mb-4">
+            See it for yourself
+          </h3>
+          <p className="text-text-primary/70 mb-8">
+            Every Leynk page looks great on any screen, no extra work needed.
+          </p>
+          
+          {(() => {
+            const externalLinks = [
+              {
+                id: 'spotify',
+                label: 'Listen on Spotify',
+                url: 'https://open.spotify.com/artist/06HL4z0CvFAxyc27GXpf02',
+                iconPath: "M12 2C6.477 2 2 6.477 2 12c0 5.523 4.477 10 10 10 5.523 0 10-4.477 10-10 0-5.523-4.477-10-10-10zm4.586 14.424c-.18.295-.563.387-.857.207-2.35-1.434-5.305-1.76-8.784-.963-.335.077-.67-.133-.746-.47-.077-.334.132-.67.47-.745 3.806-.874 7.076-.496 9.71 1.115.293.18.386.563.207.856zm1.226-2.738c-.227.368-.7.485-1.066.26-2.695-1.656-6.804-2.146-9.965-1.176-.41.125-.837-.105-.96-.514-.125-.41.104-.837.513-.96 3.63-1.114 8.163-.564 11.217 1.314.367.226.485.7.26 1.067zm.098-2.85c-3.23-1.92-8.542-2.096-11.603-1.16-.5.15-1.02-.132-1.17-.63-.15-.5.13-1.02.63-1.17 3.52-1.075 9.4-1.25 13.14 1.114.453.284.593.89.31 1.343-.284.453-.89.593-1.343.31z"
+              },
+              {
+                id: 'apple',
+                label: 'Watch on Apple Music',
+                url: 'https://music.apple.com/us/music-video/opalite/1874387735',
+                iconPath: "M16.597 12.392c0-3.155 2.571-4.66 2.686-4.733-1.465-2.144-3.738-2.435-4.545-2.478-1.928-.194-3.778 1.134-4.764 1.134-1.006 0-2.527-1.11-4.113-1.08-2.071.026-3.987 1.205-5.051 3.064-2.15 3.738-.548 9.28 1.547 12.311 1.027 1.482 2.22 3.12 3.811 3.064 1.528-.052 2.108-.98 3.94-.98 1.833 0 2.356.98 3.961.954 1.62-.026 2.651-1.487 3.65-2.951 1.156-1.688 1.631-3.324 1.652-3.411-.035-.015-3.089-1.185-3.089-4.744M14.659 5.253c.84-1.018 1.405-2.433 1.252-3.844-1.218.049-2.705.812-3.568 1.838-.773.916-1.449 2.359-1.275 3.754 1.365.105 2.748-.727 3.591-1.748z"
+              },
+              {
+                id: 'youtube',
+                label: 'Subscribe on YouTube',
+                url: 'https://www.youtube.com/channel/UCqECaJ8Gagnn7YCbPEzWH6g',
+                iconPath: "M21.582 6.186a2.709 2.709 0 00-1.904-1.914C17.994 3.75 12 3.75 12 3.75s-5.994 0-7.678.522a2.706 2.706 0 00-1.904 1.914C1.896 7.893 1.896 12 1.896 12s0 4.107.522 5.814a2.706 2.706 0 001.904 1.914C5.994 20.25 12 20.25 12 20.25s5.994 0 7.678-.522a2.707 2.707 0 001.904-1.914C22.104 16.107 22.104 12 22.104 12s0-4.107-.522-5.814zM9.993 15.381V8.62L15.385 12l-5.392 3.381z"
+              },
+              {
+                id: 'tiktok',
+                label: 'Follow on TikTok',
+                url: 'https://www.tiktok.com/@taylorswift',
+                iconPath: "M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005.8 19.34a6.34 6.34 0 006.12-6V6a8.28 8.28 0 005.89 2.6V5.2a4.44 4.44 0 011.78-.35v1.84z"
+              },
+              {
+                id: 'tumblr',
+                label: 'Follow on Tumblr',
+                url: 'https://taylorswift.tumblr.com/',
+                iconPath: "M14.563 24c-5.093 0-7.031-3.756-7.031-6.411V9.747H5.116V6.648c3.63-1.313 4.512-4.596 4.71-6.469C9.84.051 9.941 0 9.999 0h3.517v6.114h4.801v3.633h-4.82v7.47c.016 1.001.375 2.371 2.207 2.371h.09c.631-.02 1.486-.205 1.936-.419l1.156 3.425c-.436.636-2.4 1.364-4.323 1.406"
+              },
+              {
+                id: 'x',
+                label: 'Follow on X',
+                url: 'https://x.com/taylorswift13',
+                iconPath: "M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+              }
+            ];
+
+            return (
+              <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
+                
+                {/* Theme 1: Clean & Modern */}
+                <div className="bg-white rounded-[2rem] shadow-[0_20px_50px_rgba(44,58,66,0.08)] p-8 flex flex-col h-[600px] border border-accent/10 relative group">
+                  <div className="absolute inset-0 bg-gradient-to-br from-white via-transparent to-accent/5 rounded-[2rem] pointer-events-none"></div>
+                  <div className="w-24 h-24 mx-auto mb-5 rounded-full overflow-hidden border-4 border-white shadow-xl relative shrink-0 z-10">
+                    <Image src="/taylor.jpg" alt="Taylor Swift" fill className="object-cover" />
+                  </div>
+                  <h4 className="text-2xl font-bold text-text-primary mb-1 text-center z-10">Taylor Swift</h4>
+                  <p className="text-text-primary/60 mb-8 text-sm text-center z-10">Singer, songwriter and director.</p>
+                  
+                  <div className="space-y-3 overflow-y-auto pr-2 pb-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] relative z-10 flex-1">
+                    {externalLinks.map((link) => (
+                      <a key={link.id} href={link.url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 bg-bg-primary text-text-primary rounded-xl p-4 font-semibold hover:bg-white hover:shadow-md border border-transparent hover:border-accent/20 transition-all cursor-pointer group/link text-sm">
+                        <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-accent group-hover/link:scale-110 transition-transform shrink-0">
+                          <path d={link.iconPath}></path>
+                        </svg>
+                        <span className="truncate">{link.label}</span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Theme 2: Midnight Glass */}
+                <div className="bg-slate-900 rounded-3xl shadow-2xl p-8 flex flex-col h-[600px] border border-white/10 relative overflow-hidden group">
+                  <div className="absolute -top-32 -left-32 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl pointer-events-none group-hover:bg-blue-500/30 transition-colors"></div>
+                  <div className="absolute -bottom-32 -right-32 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl pointer-events-none group-hover:bg-purple-500/30 transition-colors"></div>
+                  <div className="w-24 h-24 mx-auto mb-5 rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(255,255,255,0.05)] relative shrink-0 z-10 transform -rotate-3 group-hover:rotate-0 transition-transform duration-500">
+                    <Image src="/taylor.jpg" alt="Taylor Swift" fill className="object-cover" />
+                  </div>
+                  <h4 className="text-2xl font-bold text-white mb-1 text-center z-10 tracking-wide">Taylor Swift</h4>
+                  <p className="text-slate-400 mb-8 text-sm text-center z-10">Singer, songwriter and director.</p>
+                  
+                  <div className="space-y-3 overflow-y-auto pr-2 pb-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] relative z-10 flex-1">
+                    {externalLinks.map((link) => (
+                      <a key={link.id} href={link.url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 bg-white/5 backdrop-blur-md text-white rounded-full p-4 font-medium hover:bg-white/10 border border-white/5 hover:border-white/20 transition-all cursor-pointer group/link text-sm">
+                        <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-white/80 group-hover/link:text-white group-hover/link:scale-110 transition-all shrink-0">
+                          <path d={link.iconPath}></path>
+                        </svg>
+                        <span className="truncate">{link.label}</span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Theme 3: Acoustic Warmth */}
+                <div className="bg-[#FAF6F0] p-8 border border-[#D75852]/20 shadow-[8px_8px_0px_rgba(215,88,82,0.15)] flex flex-col h-[600px] relative group transition-transform hover:-translate-y-1 hover:shadow-[12px_12px_0px_rgba(215,88,82,0.15)]">
+                  <div className="absolute inset-0 opacity-40 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZmZmIi8+CjxwYXRoIGQ9Ik0xIDBoMHYxSDF6TTMgMmgwSDF6IiBmaWxsPSIjZDc1ODUyIiBmaWxsLW9wYWNpdHk9IjAuMSIvPgo8L3N2Zz4=')] pointer-events-none"></div>
+                  <div className="w-28 h-28 mx-auto mb-5 rounded-full overflow-hidden border-2 border-[#D75852] p-1 relative shrink-0 z-10">
+                    <div className="relative w-full h-full rounded-full overflow-hidden">
+                      <Image src="/taylor.jpg" alt="Taylor Swift" fill className="object-cover grayscale hover:grayscale-0 transition-all duration-700" />
+                    </div>
+                  </div>
+                  <h4 className="text-3xl font-serif font-bold text-[#5a4231] mb-1 text-center z-10 tracking-tight">Taylor Swift</h4>
+                  <p className="text-[#8c7462] mb-8 text-sm italic text-center z-10">Singer, songwriter and director.</p>
+                  
+                  <div className="space-y-4 overflow-y-auto pr-2 pb-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] relative z-10 flex-1">
+                    {externalLinks.map((link) => (
+                      <a key={link.id} href={link.url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 bg-transparent text-[#5a4231] p-3 font-serif border-b-2 border-[#8c7462]/20 hover:border-[#D75852] hover:bg-[#D75852]/5 transition-all cursor-pointer group/link text-sm">
+                        <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-[#D75852] opacity-80 group-hover/link:opacity-100 group-hover/link:scale-110 transition-all shrink-0">
+                          <path d={link.iconPath}></path>
+                        </svg>
+                        <span className="truncate">{link.label}</span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+
+              </div>
+            );
+          })()}
+        </div>
+
         {/* Features */}
         <div className="grid md:grid-cols-3 gap-8 mt-20">
           <div className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow">
@@ -191,67 +314,6 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Example Section */}
-        <div className="mt-20 text-center">
-          <h3 className="text-3xl font-bold text-text-primary mb-4">
-            See it for yourself
-          </h3>
-          <p className="text-text-primary/70 mb-8">
-            Every Leynk page looks great on any screen, no extra work needed.
-          </p>
-          
-          <div className="max-w-md mx-auto bg-white rounded-3xl shadow-xl p-8">
-            <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-white shadow-xl relative">
-              <Image src="/taylor.jpg" alt="Taylor Swift" fill className="object-cover" />
-            </div>
-            <h4 className="text-2xl font-bold text-text-primary mb-2">Taylor Swift</h4>
-            <p className="text-text-primary/70 mb-6">Singer, songwriter and director.</p>
-            
-              <div className="space-y-3">
-                <a href="https://open.spotify.com/artist/06HL4z0CvFAxyc27GXpf02" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 bg-bg-primary text-text-primary rounded-xl p-4 font-semibold hover:bg-white hover:shadow-md border border-transparent hover:border-accent/20 transition-all cursor-pointer group">
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-accent group-hover:scale-110 transition-transform">
-                    <path d="M12 2C6.477 2 2 6.477 2 12c0 5.523 4.477 10 10 10 5.523 0 10-4.477 10-10 0-5.523-4.477-10-10-10zm4.586 14.424c-.18.295-.563.387-.857.207-2.35-1.434-5.305-1.76-8.784-.963-.335.077-.67-.133-.746-.47-.077-.334.132-.67.47-.745 3.806-.874 7.076-.496 9.71 1.115.293.18.386.563.207.856zm1.226-2.738c-.227.368-.7.485-1.066.26-2.695-1.656-6.804-2.146-9.965-1.176-.41.125-.837-.105-.96-.514-.125-.41.104-.837.513-.96 3.63-1.114 8.163-.564 11.217 1.314.367.226.485.7.26 1.067zm.098-2.85c-3.23-1.92-8.542-2.096-11.603-1.16-.5.15-1.02-.132-1.17-.63-.15-.5.13-1.02.63-1.17 3.52-1.075 9.4-1.25 13.14 1.114.453.284.593.89.31 1.343-.284.453-.89.593-1.343.31z"/>
-                  </svg>
-                  Listen on Spotify
-                </a>
-
-                <a href="https://music.apple.com/us/music-video/opalite/1874387735" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 bg-bg-primary text-text-primary rounded-xl p-4 font-semibold hover:bg-white hover:shadow-md border border-transparent hover:border-accent/20 transition-all cursor-pointer group">
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-accent group-hover:scale-110 transition-transform">
-                    <path d="M16.597 12.392c0-3.155 2.571-4.66 2.686-4.733-1.465-2.144-3.738-2.435-4.545-2.478-1.928-.194-3.778 1.134-4.764 1.134-1.006 0-2.527-1.11-4.113-1.08-2.071.026-3.987 1.205-5.051 3.064-2.15 3.738-.548 9.28 1.547 12.311 1.027 1.482 2.22 3.12 3.811 3.064 1.528-.052 2.108-.98 3.94-.98 1.833 0 2.356.98 3.961.954 1.62-.026 2.651-1.487 3.65-2.951 1.156-1.688 1.631-3.324 1.652-3.411-.035-.015-3.089-1.185-3.089-4.744M14.659 5.253c.84-1.018 1.405-2.433 1.252-3.844-1.218.049-2.705.812-3.568 1.838-.773.916-1.449 2.359-1.275 3.754 1.365.105 2.748-.727 3.591-1.748z"/>
-                  </svg>
-                  Watch on Apple Music
-                </a>
-
-                <a href="https://www.youtube.com/channel/UCqECaJ8Gagnn7YCbPEzWH6g" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 bg-bg-primary text-text-primary rounded-xl p-4 font-semibold hover:bg-white hover:shadow-md border border-transparent hover:border-accent/20 transition-all cursor-pointer group">
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-accent group-hover:scale-110 transition-transform">
-                    <path d="M21.582 6.186a2.709 2.709 0 00-1.904-1.914C17.994 3.75 12 3.75 12 3.75s-5.994 0-7.678.522a2.706 2.706 0 00-1.904 1.914C1.896 7.893 1.896 12 1.896 12s0 4.107.522 5.814a2.706 2.706 0 001.904 1.914C5.994 20.25 12 20.25 12 20.25s5.994 0 7.678-.522a2.707 2.707 0 001.904-1.914C22.104 16.107 22.104 12 22.104 12s0-4.107-.522-5.814zM9.993 15.381V8.62L15.385 12l-5.392 3.381z"/>
-                  </svg>
-                  Subscribe on YouTube
-                </a>
-
-                <a href="https://www.tiktok.com/@taylorswift" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 bg-bg-primary text-text-primary rounded-xl p-4 font-semibold hover:bg-white hover:shadow-md border border-transparent hover:border-accent/20 transition-all cursor-pointer group">
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-accent group-hover:scale-110 transition-transform">
-                    <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005.8 19.34a6.34 6.34 0 006.12-6V6a8.28 8.28 0 005.89 2.6V5.2a4.44 4.44 0 011.78-.35v1.84z"/>
-                  </svg>
-                  Follow on TikTok
-                </a>
-
-                <a href="https://taylorswift.tumblr.com/" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 bg-bg-primary text-text-primary rounded-xl p-4 font-semibold hover:bg-white hover:shadow-md border border-transparent hover:border-accent/20 transition-all cursor-pointer group">
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-accent group-hover:scale-110 transition-transform">
-                    <path d="M14.563 24c-5.093 0-7.031-3.756-7.031-6.411V9.747H5.116V6.648c3.63-1.313 4.512-4.596 4.71-6.469C9.84.051 9.941 0 9.999 0h3.517v6.114h4.801v3.633h-4.82v7.47c.016 1.001.375 2.371 2.207 2.371h.09c.631-.02 1.486-.205 1.936-.419l1.156 3.425c-.436.636-2.4 1.364-4.323 1.406" />
-                  </svg>
-                  Follow on Tumblr
-                </a>
-
-                <a href="https://x.com/taylorswift13" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 bg-bg-primary text-text-primary rounded-xl p-4 font-semibold hover:bg-white hover:shadow-md border border-transparent hover:border-accent/20 transition-all cursor-pointer group">
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-accent group-hover:scale-110 transition-transform">
-                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                  </svg>
-                  Follow on X
-                </a>
-              </div>
-          </div>
-        </div>
       </main>
 
       {/* ── Pricing Sneak Peek ────────────────────────────────── */}
