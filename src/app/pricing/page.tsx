@@ -501,12 +501,17 @@ export default function PricingPage() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-accent/15 bg-white/40 backdrop-blur-md">
-        <div className="max-w-6xl mx-auto px-4 py-10 flex flex-col md:flex-row items-center justify-between gap-4">
+      <footer className="border-t border-accent/15 bg-white/40 backdrop-blur-md py-10">
+        <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-6">
           <Link href="/">
             <Image src="/leynk-logo.svg" alt="Leynk" width={120} height={33} className="hover:opacity-80 transition-opacity" />
           </Link>
-          <p className="text-text-primary/50 text-sm">© {new Date().getFullYear()} Leynk.co — 0% transaction fees, always.</p>
+          
+          <div className="text-center text-text-primary/50 text-sm">
+            <p className="mb-1">© {new Date().getFullYear()} Raveloo Retailers LLC — 0% transaction fees, always.</p>
+            <p className="text-xs text-text-primary/40">5830 E 2nd St, Ste 7000 Casper, WY 82609 • +1 (912) 923-1747 • elmahboubi@leynk.co</p>
+          </div>
+          
           <div className="flex gap-5 text-sm text-text-primary/60">
             <Link href="/pricing" className="hover:text-accent font-medium transition-colors">Pricing</Link>
             <Link href="/login" className="hover:text-accent font-medium transition-colors">Login</Link>

@@ -376,6 +376,33 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* CEO Quote */}
+      <div className="max-w-4xl mx-auto px-4 mt-20 md:mt-32 mb-10">
+        <div className="bg-white/60 backdrop-blur-md rounded-3xl p-10 md:p-14 border border-accent/10 shadow-lg text-center relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-32 h-32 bg-accent/10 rounded-full blur-2xl -ml-10 -mt-10"></div>
+          <div className="absolute bottom-0 right-0 w-32 h-32 bg-accent-2/10 rounded-full blur-2xl -mr-10 -mb-10"></div>
+          
+          <div className="relative z-10">
+            <svg className="w-12 h-12 text-accent/30 mx-auto mb-6" fill="currentColor" viewBox="0 0 32 32" aria-hidden="true">
+              <path d="M10 8c-3.3 0-6 2.7-6 6v10h10V14H8c0-2.2 1.8-4 4-4V8zm18 0c-3.3 0-6 2.7-6 6v10h10V14h-6c0-2.2 1.8-4 4-4V8z"></path>
+            </svg>
+            <blockquote className="text-2xl md:text-3xl font-medium text-text-primary leading-tight mb-8">
+              "We built Leynk because we believe every creator and business deserves a platform that actually works for them. No corporate greed, no hidden fees. Just powerful tools to help you grow. If you have any feedback or ideas, my inbox is always open."
+            </blockquote>
+            <div className="font-bold text-text-primary mb-1">M. El Mahboubi</div>
+            <div className="text-text-primary/60 text-sm mb-6">Founder & CEO</div>
+            <div className="flex flex-col sm:flex-row justify-center gap-4 text-sm font-semibold">
+              <a href="mailto:elmahboubi@leynk.co" className="inline-block px-6 py-3 bg-accent/10 text-accent rounded-full hover:bg-accent hover:text-white transition-colors">
+                Contact the CEO
+              </a>
+              <Link href="/about" className="inline-block px-6 py-3 bg-accent text-white rounded-full hover:bg-accent/90 shadow-lg shadow-accent/20 transition-all hover:-translate-y-0.5">
+                Read our full story
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Footer */}
 
       <footer className="mt-24 border-t border-accent/15 bg-white/40 backdrop-blur-md">
@@ -397,35 +424,36 @@ export default function HomePage() {
               </p>
             </div>
             
+            {/* Business Info Column */}
+            <div>
+              <h4 className="font-bold text-text-primary mb-4">Business Details</h4>
+              <ul className="space-y-3 text-sm text-text-primary/70">
+                <li className="font-semibold text-text-primary/80">Raveloo Retailers LLC</li>
+                <li>EIN: 38-4276758</li>
+                <li>5830 E 2nd St, Ste 7000<br/>Casper, WY 82609</li>
+                <li>+1 (912) 923-1747</li>
+                <li><a href="mailto:elmahboubi@leynk.co" className="hover:text-accent transition-colors">elmahboubi@leynk.co</a></li>
+              </ul>
+            </div>
+
             {/* Links Column 1 */}
             <div>
-              <h4 className="font-bold text-text-primary mb-4">Product</h4>
+              <h4 className="font-bold text-text-primary mb-4">Explore</h4>
               <ul className="space-y-3 text-sm text-text-primary/70">
                 <li><Link href="/" className="hover:text-accent font-medium transition-colors">Features</Link></li>
                 <li><Link href="/pricing" className="hover:text-accent font-medium transition-colors">Pricing</Link></li>
-                <li><Link href="/" className="hover:text-accent font-medium transition-colors">Integrations</Link></li>
-                <li><Link href="/" className="hover:text-accent font-medium transition-colors">Analytics</Link></li>
+                <li><Link href="/about" className="hover:text-accent font-medium transition-colors">About Us</Link></li>
+                <li><Link href="/contact" className="hover:text-accent font-medium transition-colors">Contact</Link></li>
               </ul>
             </div>
 
             {/* Links Column 2 */}
             <div>
-              <h4 className="font-bold text-text-primary mb-4">Company</h4>
-              <ul className="space-y-3 text-sm text-text-primary/70">
-                <li><Link href="/" className="hover:text-accent font-medium transition-colors">About Us</Link></li>
-                <li><Link href="/" className="hover:text-accent font-medium transition-colors">Careers</Link></li>
-                <li><Link href="/" className="hover:text-accent font-medium transition-colors">Blog</Link></li>
-                <li><Link href="/" className="hover:text-accent font-medium transition-colors">Contact</Link></li>
-              </ul>
-            </div>
-
-            {/* Links Column 3 */}
-            <div>
               <h4 className="font-bold text-text-primary mb-4">Legal</h4>
               <ul className="space-y-3 text-sm text-text-primary/70">
-                <li><Link href="/" className="hover:text-accent font-medium transition-colors">Privacy Policy</Link></li>
+                <li><Link href="/privacy" className="hover:text-accent font-medium transition-colors">Privacy Policy</Link></li>
                 <li><Link href="/" className="hover:text-accent font-medium transition-colors">Terms of Service</Link></li>
-                <li><Link href="/" className="hover:text-accent font-medium transition-colors">Cookie Policy</Link></li>
+                <li><Link href="/cookie-preferences" className="hover:text-accent font-medium transition-colors">Cookie Policy</Link></li>
                 <li><Link href="/admin/login" className="hover:text-accent font-medium transition-colors">Admin Login</Link></li>
               </ul>
             </div>
@@ -434,7 +462,7 @@ export default function HomePage() {
           {/* Bottom Bar */}
           <div className="mt-16 pt-8 border-t border-accent/15 flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-text-primary/60 text-sm font-medium">
-              © {new Date().getFullYear()} Leynk.co. All rights reserved.
+              © {new Date().getFullYear()} Raveloo Retailers LLC. All rights reserved.
             </p>
             <div className="flex gap-4">
               <a href="https://x.com" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-accent/10 flex items-center justify-center text-accent hover:bg-accent hover:text-white transition-colors">

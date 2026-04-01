@@ -165,8 +165,16 @@ export default function PrivacyPage() {
             <section>
               <h2 className="text-2xl font-bold text-text-primary mb-4">11. Contact Us</h2>
               <p>
-                If you have any questions about this Privacy Policy or our data practices, please contact us through our Report page or by visiting our website.
+                If you have any questions about this Privacy Policy or our data practices, please contact us:
               </p>
+              <div className="mt-4 bg-accent/5 rounded-xl p-6 border border-accent/10">
+                <p className="font-semibold text-text-primary">Raveloo Retailers LLC</p>
+                <p>EIN: 38-4276758</p>
+                <p>5830 E 2nd St, Ste 7000</p>
+                <p>Casper, WY 82609</p>
+                <p>Phone: +1 (912) 923-1747</p>
+                <p className="mt-4"><Link href="/contact" className="text-accent hover:underline font-medium">Message us through our contact form</Link></p>
+              </div>
             </section>
           </div>
 
