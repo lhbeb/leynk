@@ -272,7 +272,7 @@ export default function HomePage() {
         </div>
 
         {/* Cards + fade overflow wrapper */}
-        <div className="relative">
+        <div className="relative overflow-hidden" style={{ maxHeight: '340px' }}>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
 
             {/* ── Free ── */}
@@ -358,21 +358,21 @@ export default function HomePage() {
 
           </div>
 
-          {/* Gradient fade + "See all plans" CTA */}
-          <div className="absolute bottom-0 left-0 right-0 h-28 pointer-events-none rounded-b-3xl" style={{ background: 'linear-gradient(to top, rgba(245,241,233,0.95) 0%, transparent 100%)' }} />
+          {/* Gradient fade */}
+          <div className="absolute bottom-0 left-0 right-0 h-56 pointer-events-none" style={{ background: 'linear-gradient(to top, rgba(245, 241, 233, 1) 5%, rgba(245, 241, 233, 0.9) 30%, transparent 100%)' }} />
         </div>
 
         {/* Full pricing CTA */}
-        <div className="text-center mt-6 relative z-10">
+        <div className="text-center -mt-16 pb-12 relative z-10">
           <Link
             href="/pricing"
-            className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full font-bold text-sm transition-all hover:shadow-lg hover:scale-105 group"
-            style={{ background: '#58A9BE', color: '#fff', boxShadow: '0 4px 16px rgba(88,169,190,0.35)' }}
+            className="inline-flex items-center gap-2.5 px-8 py-4 rounded-full font-bold transition-all hover:shadow-lg hover:-translate-y-1 group"
+            style={{ background: '#58A9BE', color: '#fff', boxShadow: '0 8px 30px rgba(88,169,190,0.45)' }}
           >
             See full pricing & compare plans
-            <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
+            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
           </Link>
-          <p className="text-text-primary/40 text-xs mt-3 font-medium">Free forever · 0% fees · Cancel anytime</p>
+          <p className="text-text-primary/50 text-xs mt-4 font-semibold tracking-wide">Free forever · 0% fees · Cancel anytime</p>
         </div>
       </section>
 
@@ -454,7 +454,6 @@ export default function HomePage() {
                 <li><Link href="/privacy" className="hover:text-accent font-medium transition-colors">Privacy Policy</Link></li>
                 <li><Link href="/" className="hover:text-accent font-medium transition-colors">Terms of Service</Link></li>
                 <li><Link href="/cookie-preferences" className="hover:text-accent font-medium transition-colors">Cookie Policy</Link></li>
-                <li><Link href="/admin/login" className="hover:text-accent font-medium transition-colors">Admin Login</Link></li>
               </ul>
             </div>
           </div>

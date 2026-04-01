@@ -177,7 +177,6 @@ export default function ContactPage() {
                 <li><Link href="/privacy" className="hover:text-accent font-medium transition-colors">Privacy Policy</Link></li>
                 <li><Link href="/" className="hover:text-accent font-medium transition-colors">Terms of Service</Link></li>
                 <li><Link href="/cookie-preferences" className="hover:text-accent font-medium transition-colors">Cookie Policy</Link></li>
-                <li><Link href="/admin/login" className="hover:text-accent font-medium transition-colors">Admin Login</Link></li>
               </ul>
             </div>
           </div>
