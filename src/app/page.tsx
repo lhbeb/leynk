@@ -393,7 +393,7 @@ export default function HomePage() {
             <div className="text-text-primary/60 text-sm mb-6">Founder & CEO</div>
             <div className="flex flex-col sm:flex-row justify-center gap-4 text-sm font-semibold">
               <a href="mailto:elmahboubi@leynk.co" className="inline-block px-6 py-3 bg-accent/10 text-accent rounded-full hover:bg-accent hover:text-white transition-colors">
-                Contact the CEO
+                elmahboubi@leynk.co
               </a>
               <Link href="/about" className="inline-block px-6 py-3 bg-accent text-white rounded-full hover:bg-accent/90 shadow-lg shadow-accent/20 transition-all hover:-translate-y-0.5">
                 Read our full story
